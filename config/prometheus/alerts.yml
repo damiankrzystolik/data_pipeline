@@ -1,0 +1,40 @@
+groups:
+  - name: django
+    rules:
+      - alert: HighErrorRate
+        expr: rate(django_http_responses_total_by_status_total{status="500"}[5m]) > 0.05
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Wysoki wskaźnik błędów 500 ({{ $value | humanizePercentage }})"
+
+      - alert: SlowResponses
+        expr: >
+          histogram_quantile(0.95,
+            rate(django_http_responses_latency_seconds_bucket[5m])
+          ) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "p95 czasu odpowiedzi > 2s ({{ $value | humanizeDuration }})"
+
+      - alert: DatabaseQuerySlow
+        expr: >
+          histogram_quantile(0.95,
+            rate(django_db_execute_latency_seconds_bucket[5m])
+          ) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "p95 czasu zapytań SQL > 500ms"
+
+      - alert: AppDown
+        expr: up{job="django"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Aplikacja Django nie odpowiada na scrape Prometheusa"

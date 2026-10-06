@@ -1,0 +1,12 @@
+services:
+  test:
+    build:
+      context: .
+      args:
+        REQUIREMENTS: testing.txt
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.testing
+      SECRET_KEY: test-secret-key
+    command: pytest --cov=apps --cov-report=term -v
+    volumes:
+      - .:/app
