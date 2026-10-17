@@ -1,7 +1,7 @@
 .PHONY: install run migrate test test-fast lint lint-fix security shell ci lock \
         docker-build docker-up docker-down docker-logs docker-migrate \
-        docker-migrate-check docker-collectstatic docker-createsuperuser \
-        docker-shell docker-test docker-clean \
+        docker-check-makemigrations docker-check-migrate docker-showmigrations \
+        docker-collectstatic docker-createsuperuser docker-shell docker-test docker-clean \
         prod-build prod-up prod-deploy prod-down prod-restart prod-logs \
         prod-migrate prod-collectstatic prod-createsuperuser prod-shell \
         prod-ssl prod-ssl-renew prod-cron-install prod-cron-remove
@@ -77,9 +77,14 @@ docker-migrate:
 	docker compose -f docker-compose.local.yml exec web python manage.py makemigrations
 	docker compose -f docker-compose.local.yml exec web python manage.py migrate
 
-docker-migrate-check:
+docker-check-makemigrations:
 	docker compose -f docker-compose.local.yml exec web python manage.py makemigrations --check --dry-run
+
+docker-check-migrate:
 	docker compose -f docker-compose.local.yml exec web python manage.py migrate --check
+
+docker-showmigrations:
+	docker compose -f docker-compose.local.yml exec web python manage.py showmigrations
 
 docker-collectstatic:
 	docker compose -f docker-compose.local.yml exec web python manage.py collectstatic --noinput

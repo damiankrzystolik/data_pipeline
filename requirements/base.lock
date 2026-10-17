@@ -11,7 +11,11 @@ attrs==26.1.0
 bleach==6.3.0
     # via -r requirements/base.txt
 certifi==2026.5.20
-    # via sentry-sdk
+    # via
+    #   requests
+    #   sentry-sdk
+charset-normalizer==3.5.2
+    # via requests
 django==5.2.14
     # via
     #   -r requirements/base.txt
@@ -36,6 +40,8 @@ djangorestframework-simplejwt==5.5.1
     # via -r requirements/base.txt
 drf-spectacular==0.29.0
     # via -r requirements/base.txt
+idna==3.20
+    # via requests
 inflection==0.5.1
     # via drf-spectacular
 jsonschema==4.26.0
@@ -62,6 +68,8 @@ referencing==0.37.0
     # via
     #   jsonschema
     #   jsonschema-specifications
+requests==2.34.2
+    # via -r requirements/base.txt
 rpds-py==0.30.0
     # via
     #   jsonschema
@@ -79,6 +87,8 @@ typing-extensions==4.15.0
 uritemplate==4.2.0
     # via drf-spectacular
 urllib3==2.7.0
-    # via sentry-sdk
+    # via
+    #   requests
+    #   sentry-sdk
 webencodings==0.5.1
     # via bleach

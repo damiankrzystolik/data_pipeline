@@ -1,6 +1,9 @@
 [project]
 name = "nbp-data-pipeline"
 version = "1.0.0"
+dependencies = [
+    "requests>=2.34.2",
+]
 
 [tool.ruff]
 target-version = "py312"

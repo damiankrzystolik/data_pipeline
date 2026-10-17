@@ -11,3 +11,4 @@ django-prometheus>=2.3.0
 structlog>=24.0.0
 sentry-sdk>=2.0.0
 python-magic>=0.4.27
+requests>=2.31.0
