@@ -3,7 +3,7 @@ services:
     build:
       context: .
       args:
-        REQUIREMENTS: testing.txt
+        REQUIREMENTS: testing
     environment:
       DJANGO_SETTINGS_MODULE: config.settings.testing
       SECRET_KEY: test-secret-key
