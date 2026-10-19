@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Waluty</h1>
+  {% if currencies %}
+    <ul class="currency-list">
+      {% for currency in currencies %}
+        <li>
+          <a href="{% url 'rates:detail' currency.currency_code %}">
+            <strong>{{ currency.currency_code }}</strong>
+            <span>{{ currency.currency_name }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Brak danych. Uruchom pipeline (fetch, transform, build_stats).</p>
+  {% endif %}
+{% endblock %}

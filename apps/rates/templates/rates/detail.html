@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ code }} – kursy walut NBP{% endblock %}
+
+{% block content %}
+  <div class="page-head">
+    <h1>{{ code }} <small>{{ currency_name }}</small></h1>
+    <label class="currency-picker">
+      Waluta
+      <select id="currency-select" data-url-template="{% url 'rates:detail' 'CODE' %}">
+        {% for currency in currencies %}
+          <option value="{{ currency.currency_code }}"{% if currency.currency_code == code %} selected{% endif %}>
+            {{ currency.currency_code }} – {{ currency.currency_name }}
+          </option>
+        {% endfor %}
+      </select>
+    </label>
+  </div>
+
+  <section class="cards">
+    <div class="card">
+      <span class="card-label">Ostatni kurs ({{ latest.date|date:"d.m.Y" }})</span>
+      <span class="card-value">{{ latest.mid|floatformat:4 }}</span>
+    </div>
+    <div class="card">
+      <span class="card-label">Średnia z 30 dni</span>
+      <span class="card-value">{{ average|floatformat:4 }}</span>
+    </div>
+  </section>
+
+  <section class="chart-block">
+    <h2>Ostatnie 30 dni</h2>
+    <div class="chart-wrap"><canvas id="daily-chart"></canvas></div>
+  </section>
+
+  <section class="chart-block">
+    <h2>Średnie miesięczne (12 miesięcy)</h2>
+    {% if monthly_data.values %}
+      <div class="chart-wrap"><canvas id="monthly-chart"></canvas></div>
+    {% else %}
+      <p>Brak statystyk miesięcznych. Uruchom <code>build_stats</code>.</p>
+    {% endif %}
+  </section>
+
+  {{ daily_data|json_script:"daily-data" }}
+  {{ monthly_data|json_script:"monthly-data" }}
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/chart.umd.min.js' %}"></script>
+  <script src="{% static 'js/rates.js' %}"></script>
+{% endblock %}

@@ -12,15 +12,22 @@ class Command(BaseCommand):
             type=str,
             help='Transform only specific date (YYYY-MM-DD). If not provided, transform all.'
         )
+        parser.add_argument(
+            '--since',
+            type=str,
+            help='Transform raw tables with effective date >= this date (YYYY-MM-DD).'
+        )
 
     def handle(self, *args, **options):
         date_filter = options.get('date')
+        since = options.get('since')
 
         # Get raw tables to transform
+        raw_tables = RawRatesTable.objects.all()
         if date_filter:
-            raw_tables = RawRatesTable.objects.filter(effective_date=date_filter)
-        else:
-            raw_tables = RawRatesTable.objects.all()
+            raw_tables = raw_tables.filter(effective_date=date_filter)
+        if since:
+            raw_tables = raw_tables.filter(effective_date__gte=since)
 
         total_rates = 0
 

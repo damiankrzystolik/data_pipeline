@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('apps.users.urls')),
+    path('rates/', include('apps.rates.urls')),
     path('', include('django_prometheus.urls')),
     path('health/', include('apps.core.urls')),
 ]
