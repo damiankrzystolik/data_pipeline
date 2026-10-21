@@ -14,7 +14,7 @@ class Command(BaseCommand):
         parser.add_argument(
             '--days',
             type=int,
-            default=3,
+            default=7,
             help='Okno catch-up: ile ostatnich dni pobrać i przetworzyć (domyślnie 7)',
         )
         parser.add_argument('--table', type=str, default='A', help='Typ tabeli NBP (A, B lub C)')
